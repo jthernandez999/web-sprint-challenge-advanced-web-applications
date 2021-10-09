@@ -1,18 +1,49 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import articleService from '../services/articleServices';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 import Article from './Article';
 import EditForm from './EditForm';
 
 const View = (props) => {
+    const { push } = useHistory()
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+    useEffect(() => {
+        articleService()
+        .then(res => {
+            setArticles(res)
+        })
+        
+    },[])
+
     const handleDelete = (id) => {
+        axiosWithAuth()
+            .delete( `/articles/${id}`)
+            .then(res => {
+                setArticles(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const handleEdit = (article) => {
+        axiosWithAuth()
+            .put(`/articles/${editId}`, article)
+            .then(res => {
+                // console.log(res.data)
+                setEditing(false)
+                setArticles(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const handleEditSelect = (id)=> {
@@ -23,7 +54,6 @@ const View = (props) => {
     const handleEditCancel = ()=>{
         setEditing(false);
     }
-
     return(<ComponentContainer>
         <HeaderContainer>View Articles</HeaderContainer>
         <ContentContainer flexDirection="row">

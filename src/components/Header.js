@@ -31,7 +31,7 @@ const HeaderStyle = styled.div`
 `
 
 const MenuStyle = styled.ul`
-  li {
+    li {
         display: inline-block;
         padding: 0.3rem 1rem;
         
