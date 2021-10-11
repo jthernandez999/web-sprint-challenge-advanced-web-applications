@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
@@ -9,15 +9,16 @@ import Article from './Article';
 import EditForm from './EditForm';
 
 const View = (props) => {
-    const { push } = useHistory()
+    // const { push } = useHistory()
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
     useEffect(() => {
         articleService()
-        .then(res => {
-            setArticles(res)
+            .then(res => {
+                // console.log(res)
+                setArticles(res)
         })
         
     },[])
